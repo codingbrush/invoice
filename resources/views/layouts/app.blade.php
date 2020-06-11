@@ -15,15 +15,16 @@
     <!-- Layout styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @notify_css
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} @yield('title')</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+{{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
 </head>
 <body>
@@ -33,9 +34,12 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
+    @guest
+    @else
         @include('layouts.sidebar')
+    @endguest
         <!-- partial -->
-        <div class="main-panel">
+        <div class="main-panel w-100 h-100">
             <main class="py-4">
                 @yield('content')
             </main>
@@ -53,6 +57,22 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-
+<!-- plugins:js -->
+@notify_js
+@notify_render
+<script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="{{asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="{{asset('assets/js/off-canvas.js')}}"></script>
+<script src="{{asset('assets/js/hoverable-collapse.js')}}"></script>
+<script src="{{asset('assets/js/misc.js')}}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script src="{{asset('assets/js/dashboard.js')}}"></script>
+<script src="{{asset('assets/js/todolist.js')}}"></script>
+<!-- End custom js for this page -->
 </body>
 </html>
